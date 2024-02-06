@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "discord-roulette-bot"
+version = "0.1.0"
+description = ""
+authors = ["Héctor Mauricio de la Rosa Prado <hoftherose@gmail.com>"]
+license = "Apache License 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
