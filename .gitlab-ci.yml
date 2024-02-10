@@ -26,6 +26,7 @@ run_tests:
   stage: test
   image: ${RUNNER_IMAGE}
   script:
+    - pip install poetry
     - make install
     - make test
 
