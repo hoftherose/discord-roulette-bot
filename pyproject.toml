@@ -1,15 +1,16 @@
 [tool.poetry]
 name = "discord-roulette-bot"
 version = "0.1.0"
-description = ""
+description = "Discord bot for playing russian roulette."
 authors = ["Héctor Mauricio de la Rosa Prado <hoftherose@gmail.com>"]
 license = "Apache License 2.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.13"
+python = "^3.10"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.0.post1"
+pytest = "^8.0.0"
 
 
 [build-system]

@@ -5,9 +5,65 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+variables:
+  IMAGE_NAME: discord-roulette-bot
+  RUNNER_IMAGE: python:3.10-buster
+
 stages:
 - test
-sast:
+- build
+- production
+- security
+
+run_linting:
   stage: test
+  image: ${RUNNER_IMAGE}
+  script:
+    - pip install black
+    - make cicd-lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        paths:
+          - src/**/*.{py}
+          - test/**/*.{py}
+          - main.py
+        compare_to: 'refs/heads/main'
+
+run_tests:
+  stage: test
+  image: ${RUNNER_IMAGE}
+  script:
+    - pip install poetry
+    - make install
+    - make cicd-test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        paths:
+          - src/**/*.{py}
+          - test/**/*.{py}
+          - main.py
+        compare_to: 'refs/heads/main'
+
+build_image:
+  image: docker:20.10.16
+  stage: build
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - echo "Logging into GitLab container registry..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "Building Docker image..."
+    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
+    - echo "Pushing image to Gitlab container registry..."
+    - docker push ${IMAGE_NAME}:${CI_COMMIT_SHA}
+  rules:
+    - when: never
+
+sast:
+  stage: security
+
 include:
 - template: Security/SAST.gitlab-ci.yml
