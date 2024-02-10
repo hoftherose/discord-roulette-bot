@@ -4,6 +4,12 @@ IMAGE_TAG?=latest
 install: poetry.lock
 	poetry install --no-root
 
+lint:
+	black .
+
+cicd-lint:
+	black . --check --exclude '\.venv/|\.git/'
+
 test:
 	pytest .
 
