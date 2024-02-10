@@ -21,6 +21,13 @@ run_linting:
   script:
     - pip install black
     - make cicd-lint
+  rules:
+    - changes:
+      paths:
+        - src/*.{py}
+        - test/*.{py}
+        - main.py
+      compare_to: 'refs/heads/main'
 
 run_tests:
   stage: test
@@ -29,6 +36,13 @@ run_tests:
     - pip install poetry
     - make install
     - make cicd-test
+  rules:
+    - changes:
+      paths:
+        - src/*.{py}
+        - test/*.{py}
+        - main.py
+      compare_to: 'refs/heads/main'
 
 build_image:
   image: docker:20.10.16
