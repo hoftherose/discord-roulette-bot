@@ -19,12 +19,14 @@ run_linting:
   stage: test
   image: ${RUNNER_IMAGE}
   script:
+    - pip install black
     - make cicd-lint
 
 run_tests:
   stage: test
   image: ${RUNNER_IMAGE}
   script:
+    - make install
     - make test
 
 build_image:
