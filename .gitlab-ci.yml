@@ -22,7 +22,7 @@ run_linting:
     - pip install black
     - make cicd-lint
   rules:
-    - changes:
+    changes:
       paths:
         - src/*.{py}
         - test/*.{py}
@@ -37,7 +37,7 @@ run_tests:
     - make install
     - make cicd-test
   rules:
-    - changes:
+    changes:
       paths:
         - src/*.{py}
         - test/*.{py}
