@@ -13,6 +13,9 @@ cicd-lint:
 test:
 	pytest .
 
+cicd-test:
+	poetry run pytest .
+
 run:
 	poetry run uvicorn main:app --reload --host 0.0.0.0
 

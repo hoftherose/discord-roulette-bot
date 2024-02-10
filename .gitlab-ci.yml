@@ -28,7 +28,7 @@ run_tests:
   script:
     - pip install poetry
     - make install
-    - make test
+    - make cicd-test
 
 build_image:
   stage: build
