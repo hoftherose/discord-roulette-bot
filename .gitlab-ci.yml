@@ -22,12 +22,13 @@ run_linting:
     - pip install black
     - make cicd-lint
   rules:
-    changes:
-      paths:
-        - src/*.{py}
-        - test/*.{py}
-        - main.py
-      compare_to: 'refs/heads/main'
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        paths:
+          - src/*.{py}
+          - test/*.{py}
+          - main.py
+        compare_to: 'refs/heads/main'
 
 run_tests:
   stage: test
@@ -37,12 +38,13 @@ run_tests:
     - make install
     - make cicd-test
   rules:
-    changes:
-      paths:
-        - src/*.{py}
-        - test/*.{py}
-        - main.py
-      compare_to: 'refs/heads/main'
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        paths:
+          - src/*.{py}
+          - test/*.{py}
+          - main.py
+        compare_to: 'refs/heads/main'
 
 build_image:
   image: docker:20.10.16
