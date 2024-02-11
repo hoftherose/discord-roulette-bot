@@ -1,10 +1,12 @@
 from typing import Self
+from src.api.repo.conn import Base, session
+from sqlalchemy import Column, String
 
+class Users(Base):
+    __tablename__ = "bas_ficax_services_view"
 
-class Users:
-    def __init__(self, id: str, name: str):
-        self.id = id
-        self.name = name
+    user_id = Column("USER_ID", String(20), primary_key=True)
+    name = Column("NAME", String(50))
 
     @classmethod
     def get_all(cls) -> list[Self]:
