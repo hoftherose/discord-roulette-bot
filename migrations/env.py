@@ -1,3 +1,4 @@
+import os
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -25,6 +26,13 @@ target_metadata = None
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+DB_USER = os.environ.get("DB_USER", "user")
+DB_PASS = os.environ.get("DB_PASS", "password")
+DB_HOST = os.environ.get("DB_HOST", "database")
+DB_PORT = os.environ.get("DB_PORT", 5432)
+DB_NAME = os.environ.get("DB_NAME", "db")
+
+config.set_main_option("sqlalchemy.url", f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
