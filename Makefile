@@ -5,15 +5,9 @@ install: poetry.lock
 	poetry install --no-root
 
 lint:
-	black .
-
-cicd-lint:
-	black . --check --exclude '\.venv/|\.git/'
+	poetry run black . --check --exclude '\.venv/|\.git/'
 
 test:
-	pytest .
-
-cicd-test:
 	poetry run pytest .
 
 run:
