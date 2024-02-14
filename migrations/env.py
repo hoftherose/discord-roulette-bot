@@ -35,7 +35,10 @@ DB_HOST = os.environ.get("DB_HOST", "database")
 DB_PORT = os.environ.get("DB_PORT", 5432)
 DB_NAME = os.environ.get("DB_NAME", "db")
 
-config.set_main_option("sqlalchemy.url", f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+config.set_main_option(
+    "sqlalchemy.url", f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -79,6 +82,7 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

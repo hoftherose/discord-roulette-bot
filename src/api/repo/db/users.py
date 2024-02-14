@@ -2,6 +2,7 @@ from typing import Self
 from src.api.repo.conn import Base
 from sqlalchemy import Column, String
 
+
 class Users(Base):
     __tablename__ = "user"
 
