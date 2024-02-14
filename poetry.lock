@@ -124,7 +124,7 @@ test = ["flake8 (>=6.1,<7.0)", "uvloop (>=0.15.3)"]
 name = "black"
 version = "24.2.0"
 description = "The uncompromising code formatter."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "black-24.2.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:6981eae48b3b33399c8757036c7f5d48a535b962a7c2310d19361edeef64ce29"},
@@ -321,7 +321,7 @@ files = [
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
@@ -420,7 +420,7 @@ files = [
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
-optional = false
+optional = true
 python-versions = ">=3.5"
 files = [
     {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
@@ -431,7 +431,7 @@ files = [
 name = "packaging"
 version = "23.2"
 description = "Core utilities for Python packages"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
@@ -442,7 +442,7 @@ files = [
 name = "pathspec"
 version = "0.12.1"
 description = "Utility library for gitignore style pattern matching of file paths."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pathspec-0.12.1-py3-none-any.whl", hash = "sha256:a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08"},
@@ -453,7 +453,7 @@ files = [
 name = "platformdirs"
 version = "4.2.0"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "platformdirs-4.2.0-py3-none-any.whl", hash = "sha256:0614df2a2f37e1a662acbd8e2b25b92ccf8632929bc6d43467e17fe89c75e068"},
@@ -468,7 +468,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.4.3)", "pytest-
 name = "pluggy"
 version = "1.4.0"
 description = "plugin and hook calling mechanisms for python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pluggy-1.4.0-py3-none-any.whl", hash = "sha256:7db9f7b503d67d1c5b95f59773ebb58a8c1c288129a88665838012cfb07b8981"},
@@ -593,7 +593,7 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 name = "pytest"
 version = "8.0.0"
 description = "pytest: simple powerful testing with Python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pytest-8.0.0-py3-none-any.whl", hash = "sha256:50fb9cbe836c3f20f0dfa99c565201fb75dc54c8d76373cd1bde06b06657bdb6"},
@@ -730,7 +730,7 @@ full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
@@ -770,4 +770,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "653fed46157cf49c5e4a810d58bcf43d16ca39212373804b62e577c1586188a2"
+content-hash = "b2346c7f3902a07f4972e8eb6d449d223332f138e0a8bca60b699a3a01c2c16a"
