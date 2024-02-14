@@ -10,12 +10,15 @@ readme = "README.md"
 python = "^3.10"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.0.post1"
-pytest = "^8.0.0"
 asyncpg = "^0.29.0"
 sqlalchemy = "^2.0.25"
 alembic = "^1.13.1"
-psycopg2 = "^2.9.9"
 
+[tool.poetry.group.lint.dependencies]
+black = "^24.2.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.0"
 
 [build-system]
 requires = ["poetry-core"]
