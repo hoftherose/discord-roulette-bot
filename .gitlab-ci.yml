@@ -20,7 +20,7 @@ run_linting:
   image: ${RUNNER_IMAGE}
   script:
     - pip install poetry
-    - poetry install --only lint --no-root
+    - make install-lint
     - make lint
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
@@ -36,7 +36,7 @@ run_tests:
   image: ${RUNNER_IMAGE}
   script:
     - pip install poetry
-    - make install --with test
+    - make install-test
     - make test
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
