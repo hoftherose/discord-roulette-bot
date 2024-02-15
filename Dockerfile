@@ -1,4 +1,4 @@
-FROM python:3.10-buster
+FROM python:3.11-buster
 
 ENV POETRY_VERSION=1.7.1
 
