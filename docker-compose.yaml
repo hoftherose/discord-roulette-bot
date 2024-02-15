@@ -1,15 +1,18 @@
 version: "3.9"
 
 services:
-    backend:
-        build: .
+    player-api:
+        build:
+          context: .
+          dockerfile: environments/dev/Dockerfile.players
         ports:
         - "8000:8000"
         env_file:
         - .env
         volumes:
-        - "./src:/usr/src/app/src"
-        - "./main.py:/usr/src/app/main.py"
+        - "./src/api/players:/usr/src/app"
+        - "./poetry.lock:/usr/src/app/poetry.lock"
+        - "./pyproject.toml:/usr/src/app/pyproject.toml"
 
     database:
         image: postgres:16.1
@@ -29,6 +32,6 @@ services:
           PGADMIN_DEFAULT_EMAIL: admin@admin.com
           PGADMIN_DEFAULT_PASSWORD: admin
         volumes:
-        - "./dev/pgadmin.json:/pgadmin4/servers.json"
+        - "./environments/dev/pgadmin.json:/pgadmin4/servers.json"
         profiles:
         - monitor

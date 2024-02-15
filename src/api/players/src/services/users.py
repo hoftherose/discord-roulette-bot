@@ -1,4 +1,4 @@
-from src.api.repo.db import Users
+from src.repo.db import Users
 
 
 def get_all_users() -> list[Users]:

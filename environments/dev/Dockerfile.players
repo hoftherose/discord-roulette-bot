@@ -7,8 +7,9 @@ EXPOSE 8000
 
 RUN pip install "poetry==$POETRY_VERSION"
 
-COPY poetry.lock pyproject.toml /usr/src/app/
+COPY poetry.lock .
+COPY pyproject.toml .
 RUN poetry install --no-interaction
 
-COPY . .
+COPY src/api/players .
 CMD [ "poetry", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]

@@ -1,8 +1,8 @@
 from typing import Self
-from src.api.repo.conn import Base
 from sqlalchemy import Column, String
 from sqlalchemy import select, insert, update, delete
 
+from src.repo.conn import Base
 
 class Users(Base):
     __tablename__ = "user"
