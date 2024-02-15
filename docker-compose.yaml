@@ -6,13 +6,22 @@ services:
           context: .
           dockerfile: environments/dev/Dockerfile.players
         ports:
-        - "8000:8000"
+        - "8001:8000"
         env_file:
         - .env
         volumes:
-        - "./src/api/players:/usr/src/app"
-        - "./poetry.lock:/usr/src/app/poetry.lock"
-        - "./pyproject.toml:/usr/src/app/pyproject.toml"
+        - "./src/api/players:/usr/src"
+
+    admin:
+        build:
+          context: .
+          dockerfile: environments/dev/Dockerfile.admin
+        ports:
+        - "8002:8000"
+        env_file:
+        - .env
+        volumes:
+        - "./src/api/admin:/usr/src"
 
     database:
         image: postgres:16.1
