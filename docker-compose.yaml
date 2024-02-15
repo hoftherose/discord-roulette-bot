@@ -1,15 +1,46 @@
 version: "3.9"
 
 services:
-    backend:
-        build: .
+    traefik:
+        image: traefik:v3.0
+        command: --api.insecure=true --providers.docker
         ports:
-        - "8000:8000"
+        - "80:80"
+        - "8080:8080"
+        volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        labels:
+        - rule = "Host(`traefix.localhost`)"
+
+    api-player:
+        build:
+          context: .
+          dockerfile: environments/dev/Dockerfile.players
+        ports:
+        - "8001:8000"
         env_file:
         - .env
         volumes:
-        - "./src:/usr/src/app/src"
-        - "./main.py:/usr/src/app/main.py"
+        - "./src/api/players:/usr/src"
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.player.rule=Host(`player.localhost`)"
+
+    api-admin:
+        build:
+          context: .
+          dockerfile: environments/dev/Dockerfile.admin
+        ports:
+        - "8002:8000"
+        env_file:
+        - .env
+        volumes:
+        - "./src/api/admin:/usr/src"
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.admin.rule=Host(`admin.localhost`)"
 
     database:
         image: postgres:16.1
@@ -24,6 +55,15 @@ services:
     pgadmin:
         image: dpage/pgadmin4:8.3
         ports:
-        - "5050:5050"
+        - "5050:80"
+        environment:
+          PGADMIN_DEFAULT_EMAIL: admin@admin.com
+          PGADMIN_DEFAULT_PASSWORD: admin
+        volumes:
+        - "./environments/dev/pgadmin.json:/pgadmin4/servers.json"
         profiles:
         - monitor
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)"

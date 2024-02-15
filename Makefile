@@ -4,6 +4,9 @@ IMAGE_TAG?=latest
 install: poetry.lock
 	poetry install --no-root
 
+install-dev: poetry.lock
+	poetry install --with lint,test --no-root
+
 install-lint: poetry.lock
 	poetry install --with lint --without dev --no-root
 

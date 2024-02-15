@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from src.api.routers import health_checker_router, user_router
-from src.api.repo.conn import Base
+from src.routers import health_checker_router, user_router
+from src.repo.conn import Base
 
 app = FastAPI()
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.api.services.users import (
+from src.services.users import (
     get_all_users,
     get_users,
     create_user,
