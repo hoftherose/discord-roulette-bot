@@ -1,6 +1,7 @@
 from typing import Self
 from src.api.repo.conn import Base
 from sqlalchemy import Column, String
+from sqlalchemy import select, insert, update, delete
 
 
 class Users(Base):
@@ -11,17 +12,17 @@ class Users(Base):
 
     @classmethod
     def get_all(cls) -> list[Self]:
-        return [cls(id="1", name="John")]
+        return select(cls).all()
 
     @classmethod
-    def get_by_ids(cls, user_ids: str) -> list[Self]:
-        return [cls(id, "John") for user_id in user_ids]
+    def get_by_ids(cls, user_ids: list[str]) -> list[Self]:
+        return select(cls).where(cls.id.in_(user_ids)).all()
 
     def create(self):
-        pass
+        return insert(self)
 
-    def update(self, **args):
-        pass
+    def update(self):
+        return update(self)
 
     def delete(self):
-        pass
+        return delete(self)
