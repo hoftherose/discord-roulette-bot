@@ -4,6 +4,7 @@ from sqlalchemy import select, insert, update, delete
 
 from src.repo.conn import Base
 
+
 class Users(Base):
     __tablename__ = "user"
 
