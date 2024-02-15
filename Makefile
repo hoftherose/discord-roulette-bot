@@ -4,19 +4,19 @@ IMAGE_TAG?=latest
 install: poetry.lock
 	poetry install --no-root
 
-lint:
-	black .
+install-lint: poetry.lock
+	poetry install --with lint --without dev --no-root
 
-cicd-lint:
-	black . --check --exclude '\.venv/|\.git/'
+install-test: poetry.lock
+	poetry install --with test --without dev --no-root
+
+lint:
+	poetry run black . --check --exclude '\.venv/|\.git/'
 
 test:
-	pytest .
-
-cicd-test:
 	poetry run pytest .
 
-run:
+run: install
 	poetry run uvicorn main:app --reload --host 0.0.0.0
 
 build-image:

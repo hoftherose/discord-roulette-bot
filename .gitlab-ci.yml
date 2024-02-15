@@ -7,7 +7,7 @@
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 variables:
   IMAGE_NAME: discord-roulette-bot
-  RUNNER_IMAGE: python:3.10-buster
+  RUNNER_IMAGE: python:3.11-buster
 
 stages:
 - test
@@ -19,8 +19,9 @@ run_linting:
   stage: test
   image: ${RUNNER_IMAGE}
   script:
-    - pip install black
-    - make cicd-lint
+    - pip install poetry
+    - make install-lint
+    - make lint
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
       changes:
@@ -35,8 +36,8 @@ run_tests:
   image: ${RUNNER_IMAGE}
   script:
     - pip install poetry
-    - make install
-    - make cicd-test
+    - make install-test
+    - make test
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
       changes:
