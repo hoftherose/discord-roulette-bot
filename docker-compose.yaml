@@ -1,7 +1,18 @@
 version: "3.9"
 
 services:
-    player-api:
+    traefik:
+        image: traefik:v3.0
+        command: --api.insecure=true --providers.docker
+        ports:
+        - "80:80"
+        - "8080:8080"
+        volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        labels:
+        - rule = "Host(`traefix.localhost`)"
+
+    api-player:
         build:
           context: .
           dockerfile: environments/dev/Dockerfile.players
@@ -11,8 +22,12 @@ services:
         - .env
         volumes:
         - "./src/api/players:/usr/src"
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.player.rule=Host(`player.localhost`)"
 
-    admin:
+    api-admin:
         build:
           context: .
           dockerfile: environments/dev/Dockerfile.admin
@@ -22,6 +37,10 @@ services:
         - .env
         volumes:
         - "./src/api/admin:/usr/src"
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.admin.rule=Host(`admin.localhost`)"
 
     database:
         image: postgres:16.1
@@ -44,3 +63,7 @@ services:
         - "./environments/dev/pgadmin.json:/pgadmin4/servers.json"
         profiles:
         - monitor
+        depends_on:
+        - traefik
+        labels:
+        - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)"
