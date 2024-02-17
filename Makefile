@@ -24,6 +24,9 @@ test:
 run: install
 	poetry run uvicorn main:app --reload --host 0.0.0.0
 
+migrations:
+	poetry run alembic upgrade head
+
 build-image:
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
