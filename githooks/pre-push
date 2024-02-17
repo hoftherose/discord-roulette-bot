@@ -1,0 +1,9 @@
+#!/bin/sh
+
+make lint PARAMS='--quiet'
+
+if [ $? -ne 0 ]; then
+    echo "Linting failed, fix errors or stash changes."
+    exit 1
+fi
+exit 0
