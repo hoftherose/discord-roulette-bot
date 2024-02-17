@@ -14,8 +14,7 @@ install-test: poetry.lock
 	poetry install --with test --without dev --no-root
 
 lint:
-	poetry run black . --check --exclude '\.venv/|\.git/'
-
+	poetry run black . --check --exclude '\.venv/|\.git/' $(PARAMS)
 test:
 	poetry run pytest .
 
