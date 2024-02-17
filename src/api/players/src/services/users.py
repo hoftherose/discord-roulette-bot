@@ -10,8 +10,8 @@ async def get_users(user_ids: list[str]) -> Users:
 
 
 async def create_user(user_id: str, name: str) -> Users:
-    user = Users(user_id, "John")
-    return await user.create()
+    user = Users(id=user_id, name="John")
+    await user.create()
 
 
 async def update_user(user_id: str, name: str) -> Users:

@@ -23,9 +23,9 @@ async def read_user(user_id: str):
 
 
 @router.post("/{user_id}")
-async def post_user(user_id: str):
-    user = await create_user(user_id)
-    return user
+async def post_user(user_id: str, name: str):
+    await create_user(user_id, name)
+    return {"msg": f"User {user_id} successfully created"}
 
 
 @router.patch("/{user_id}")

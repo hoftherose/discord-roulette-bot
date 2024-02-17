@@ -19,10 +19,13 @@ class Users(Base):
 
     @classmethod
     async def get_by_ids(cls, user_ids: list[str]) -> list[Self]:
-        return select(cls).where(cls.id.in_(user_ids)).all()
+        async with Session() as session:
+            result = await session.execute(select(cls).where(cls.id.in_(user_ids)))
+            return result.all()
 
     async def create(self):
-        return insert(self)
+        async with Session() as session:
+            session.add(self)
 
     async def update(self):
         return update(self)
