@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Writes the issue number into the commit message.
+
+ticket=$(git symbolic-ref HEAD | grep -Eo '(feature|bug|docs)/([0-9]+)' | grep -Eo '[0-9]+')
+if [ -n "$ticket" ]; then
+	COMMIT_MSG=$(cat "${1:?Missing commit message file}")
+    echo "Issue #$ticket: $COMMIT_MSG" > $1
+else
+	echo "Branch does not follow naming standard, please use '[feature|bug|docs]/\$ISSUE_NUMBER-\$BRANCH_NAME'"
+	exit 1
+fi
