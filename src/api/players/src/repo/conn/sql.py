@@ -15,7 +15,7 @@ engine = create_async_engine(
     isolation_level="AUTOCOMMIT",
 )
 
-session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+Session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 
 class Base(DeclarativeBase):

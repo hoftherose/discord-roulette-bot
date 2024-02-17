@@ -2,7 +2,7 @@ from typing import Self
 from sqlalchemy import Column, String
 from sqlalchemy import select, insert, update, delete
 
-from src.repo.conn import Base
+from src.repo.conn import Base, Session
 
 
 class Users(Base):
@@ -12,18 +12,20 @@ class Users(Base):
     name = Column("NAME", String(50))
 
     @classmethod
-    def get_all(cls) -> list[Self]:
-        return select(cls).all()
+    async def get_all(cls) -> list[Self]:
+        async with Session() as session:
+            result = await session.execute(select(cls))
+            return result.all()
 
     @classmethod
-    def get_by_ids(cls, user_ids: list[str]) -> list[Self]:
+    async def get_by_ids(cls, user_ids: list[str]) -> list[Self]:
         return select(cls).where(cls.id.in_(user_ids)).all()
 
-    def create(self):
+    async def create(self):
         return insert(self)
 
-    def update(self):
+    async def update(self):
         return update(self)
 
-    def delete(self):
+    async def delete(self):
         return delete(self)
