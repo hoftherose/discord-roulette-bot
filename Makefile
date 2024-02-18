@@ -14,7 +14,7 @@ install-test: poetry.lock
 	poetry install --with test --without dev --no-root
 
 install-hooks:
-	cp githooks/* .git/hooks/
+	cp .githooks/* .git/hooks/
 
 lint:
 	poetry run black . --check --exclude '\.venv/|\.git/' $(PARAMS)
