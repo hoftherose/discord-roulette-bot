@@ -1,25 +1,24 @@
 from src.repo.db import Users
 
 
-def get_all_users() -> list[Users]:
-    return Users.get_all()
+async def get_all_users() -> list[Users]:
+    return await Users.get_all()
 
 
-def get_users(user_ids: list[str]) -> Users:
-    return Users.get_by_ids(user_ids)
+async def get_user_by_id(user_id: str) -> Users:
+    return await Users.get_by_id(user_id)
 
 
-def create_user(user_id: str, name: str) -> Users:
-    user = Users(user_id, "John")
-    return user.create()
+async def create_user(user_id: str, name: str) -> None:
+    user = Users(id=user_id, name=name)
+    await user.create()
 
 
-def update_user(user_id: str, name: str) -> Users:
-    user = get_users([user_id])
-    user.name = name
-    return user.update()
+async def change_user_name(user_id: str, name: str) -> None:
+    users = await get_user_by_id(user_id)
+    await users.change_name(name=name)
 
 
-def remove_user(user_id: str) -> None:
-    user = Users.get_by_ids([user_id])
-    return Users.delete(user)
+async def remove_user(user_id: str) -> None:
+    user = await get_user_by_id(user_id)
+    await Users.delete(user)
