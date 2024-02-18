@@ -36,3 +36,4 @@ class Users(Base):
     async def delete(self):
         async with Session() as session:
             await session.delete(self)
+            await session.commit()
