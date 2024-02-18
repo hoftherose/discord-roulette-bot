@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from src.services.users import (
     get_all_users,
-    get_users,
+    get_users_by_id,
     create_user,
-    update_user,
+    change_user_name,
     remove_user,
 )
 
@@ -17,8 +17,8 @@ async def list_users():
 
 
 @router.get("/{user_id}")
-async def read_user(user_id: str):
-    user = await get_users([user_id])
+async def get_user(user_id: str):
+    user = await get_users_by_id([user_id])
     return user
 
 
@@ -29,9 +29,9 @@ async def post_user(user_id: str, name: str):
 
 
 @router.patch("/{user_id}")
-async def patch_user(user_id: str):
-    user = await update_user(user_id)
-    return user
+async def patch_user(user_id: str, name: str):
+    await change_user_name(user_id, name)
+    return {"msg": f"User {user_id} name changed to {name}"}
 
 
 @router.delete("/{user_id}")
