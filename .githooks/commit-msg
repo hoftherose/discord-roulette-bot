@@ -5,7 +5,10 @@
 ticket=$(git symbolic-ref HEAD | grep -Eo '(feature|bug|docs)/([0-9]+)' | grep -Eo '[0-9]+')
 if [ -n "$ticket" ]; then
 	COMMIT_MSG=$(cat "${1:?Missing commit message file}")
-    echo "Issue #$ticket: $COMMIT_MSG" > $1
+	ticket_in_message=$(echo $COMMIT_MSG | grep -Eo $ticket)
+	if [ $? -eq 1 ]; then
+		echo "Issue #$ticket: $COMMIT_MSG" > $1
+	fi
 else
 	echo "Branch does not follow naming standard, please use '[feature|bug|docs]/\$ISSUE_NUMBER-\$BRANCH_NAME'"
 	exit 1
