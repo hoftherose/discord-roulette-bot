@@ -16,10 +16,10 @@ def create_user(user_id: str, name: str) -> None:
 
 
 def change_user_name(user_id: str, name: str) -> None:
-    users = asyncio.run(get_user_by_id(user_id))
+    users = get_user_by_id(user_id)
     asyncio.run(users.change_name(name=name))
 
 
 def remove_user(user_id: str) -> None:
-    user = asyncio.run(get_user_by_id(user_id))
+    user = get_user_by_id(user_id)
     asyncio.run(Users.delete(user))
