@@ -1,24 +1,25 @@
+import asyncio
 from src.repo.db import Users
 
 
-async def get_all_users() -> list[Users]:
-    return await Users.get_all()
+def get_all_users() -> list[Users]:
+    return asyncio.run(Users.get_all())
 
 
-async def get_user_by_id(user_id: str) -> Users:
-    return await Users.get_by_id(user_id)
+def get_user_by_id(user_id: str) -> Users:
+    return asyncio.run(Users.get_by_id(user_id))
 
 
-async def create_user(user_id: str, name: str) -> None:
+def create_user(user_id: str, name: str) -> None:
     user = Users(id=user_id, name=name)
-    await user.create()
+    asyncio.run(user.create())
 
 
-async def change_user_name(user_id: str, name: str) -> None:
-    users = await get_user_by_id(user_id)
-    await users.change_name(name=name)
+def change_user_name(user_id: str, name: str) -> None:
+    users = asyncio.run(get_user_by_id(user_id))
+    asyncio.run(users.change_name(name=name))
 
 
-async def remove_user(user_id: str) -> None:
-    user = await get_user_by_id(user_id)
-    await Users.delete(user)
+def remove_user(user_id: str) -> None:
+    user = asyncio.run(get_user_by_id(user_id))
+    asyncio.run(Users.delete(user))
