@@ -1,9 +1,3 @@
-## What does this MR do?
-<!-- Briefly describe what this MR is about. -->
-
-## Related issues
-<!-- Link related issues below. -->
-
 ## Pull request checklist
 
 Please check if your PR fulfills the following requirements:
