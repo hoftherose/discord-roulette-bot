@@ -26,9 +26,7 @@ run_linting:
     - if: $CI_PIPELINE_SOURCE == "push"
       changes:
         paths:
-          - src/**/*.{py}
-          - test/**/*.{py}
-          - main.py
+          - api/**/*.{py}
         compare_to: 'refs/heads/main'
 
 run_tests:
@@ -42,9 +40,7 @@ run_tests:
     - if: $CI_PIPELINE_SOURCE == "push"
       changes:
         paths:
-          - src/**/*.{py}
-          - test/**/*.{py}
-          - main.py
+          - api/**/*.{py}
         compare_to: 'refs/heads/main'
 
 build_image:

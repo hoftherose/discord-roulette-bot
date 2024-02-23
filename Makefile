@@ -20,7 +20,7 @@ lint:
 	poetry run black . --check --exclude '\.venv/|\.git/' $(PARAMS)
 
 test:
-	poetry run pytest ./src/api/$(SERVICE)
+	poetry run pytest ./api/$(SERVICE)
 
 run: install
 	poetry run uvicorn main:app --reload --host 0.0.0.0
