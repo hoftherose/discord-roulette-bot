@@ -13,14 +13,14 @@ async def mock_get_all():
 
 
 async def mock_get_by_id(user_id):
-    users = [user for user in USERS if user.id==user_id]
+    users = [user for user in USERS if user.id == user_id]
     if len(users) != 1:
         raise ValueError("User lookup not found or not unique")
     return users[0]
 
 
 async def mock_create(user_id):
-    users = [user for user in USERS if user.id==user_id]
+    users = [user for user in USERS if user.id == user_id]
     if len(users) != 1:
         raise ValueError("User lookup not found or not unique")
     return users[0]

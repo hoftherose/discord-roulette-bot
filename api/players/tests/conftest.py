@@ -8,5 +8,6 @@ from fastapi.testclient import TestClient
 def mock_app():
     return TestClient(app)
 
+
 def noop(*args, **kwargs):
     pass

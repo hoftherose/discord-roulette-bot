@@ -22,8 +22,8 @@ def test_get_all_users(monkeypatch):
 def test_get_user_by_id(monkeypatch):
     monkeypatch.setattr(Users, "get_by_id", mock_get_by_id)
     users = get_user_by_id("2")
-    assert users.id=="2"
-    assert users.name==USERS[1].name
+    assert users.id == "2"
+    assert users.name == USERS[1].name
 
 
 @patch.object(Users, "create")
