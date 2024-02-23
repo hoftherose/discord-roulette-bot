@@ -11,7 +11,7 @@ install-lint: poetry.lock
 	poetry install --with lint --without dev --no-root
 
 install-test: poetry.lock
-	poetry install --with test --without dev --no-root
+	poetry install --with test --no-root
 
 install-hooks:
 	cp .githooks/* .git/hooks/
