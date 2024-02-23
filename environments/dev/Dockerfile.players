@@ -11,6 +11,6 @@ COPY poetry.lock .
 COPY pyproject.toml .
 RUN poetry install --no-interaction --no-root
 
-COPY src/api/players /usr/src
+COPY api/players /usr/src
 
 CMD [ "poetry", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--app-dir", "/usr/src"]

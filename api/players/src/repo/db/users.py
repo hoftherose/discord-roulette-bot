@@ -18,9 +18,9 @@ class Users(Base):
             return [result[0] for result in results]
 
     @classmethod
-    async def get_by_id(cls, user_ids: str) -> Self:
+    async def get_by_id(cls, user_id: str) -> Self:
         async with Session() as session:
-            return await session.get(cls, user_ids)
+            return await session.get(cls, user_id)
 
     async def create(self) -> None:
         async with Session() as session:
@@ -33,7 +33,8 @@ class Users(Base):
             self.name = name
             await session.commit()
 
-    async def delete(self):
+    @classmethod
+    async def delete(cls, user: Self):
         async with Session() as session:
-            await session.delete(self)
+            await session.delete(user)
             await session.commit()
