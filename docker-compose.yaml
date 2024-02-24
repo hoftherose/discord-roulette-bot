@@ -4,88 +4,88 @@ services:
     traefik:
         image: traefik:v3.0
         ports:
-        - "80:80"
-        - "8080:8080"
+          - "80:80"
+          - "8080:8080"
         volumes:
-        - "/var/run/docker.sock:/var/run/docker.sock"
+          - "/var/run/docker.sock:/var/run/docker.sock"
         command:
-        - --api.insecure=true
-        - --providers.docker=true
-        - --entrypoints.web.address=:80
+          - --api.insecure=true
+          - --providers.docker=true
+          - --entrypoints.web.address=:80
         labels:
-          traefik.http.routers.traefik.rule: Host(`traefik.localhost`)
+            traefik.http.routers.traefik.rule: Host(`traefik.localhost`)
 
     api-player:
         build:
-          context: .
-          dockerfile: environments/dev/Dockerfile.player
+            context: .
+            dockerfile: environments/dev/Dockerfile.players
         ports:
-        - "8001:8000"
+          - "8001:8000"
         env_file:
-        - .env
+          - .env
         volumes:
-        - "./api/players:/usr/src"
+          - "./api/players:/usr/src"
         depends_on:
-        - traefik
+          - traefik
         labels:
-          traefik.http.routers.player.rule: Host(`player.localhost`)
+            traefik.http.routers.player.rule: Host(`player.localhost`)
 
     api-admin:
         build:
-          context: .
-          dockerfile: environments/dev/Dockerfile.admin
+            context: .
+            dockerfile: environments/dev/Dockerfile.admin
         ports:
-        - "8002:8000"
+          - "8002:8000"
         env_file:
-        - .env
+          - .env
         volumes:
-        - "./api/admin:/usr/src"
+          - "./api/admin:/usr/src"
         depends_on:
-        - traefik
+          - traefik
         labels:
-          traefik.http.routers.admin.rule: Host(`admin.localhost`)
+            traefik.http.routers.admin.rule: Host(`admin.localhost`)
 
     database:
         image: postgres:16.1
         restart: always
         environment:
-          POSTGRES_DB: db
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
+            POSTGRES_DB: db
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: password
         ports:
-        - "5432:5432"
+          - "5432:5432"
 
     pgadmin:
         image: dpage/pgadmin4:8.3
         ports:
-        - "5050:80"
+          - "5050:80"
         environment:
-          PGADMIN_DEFAULT_EMAIL: admin@admin.com
-          PGADMIN_DEFAULT_PASSWORD: admin
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: admin
         volumes:
-        - "./environments/dev/pgadmin.json:/pgadmin4/servers.json"
+          - "./environments/dev/pgadmin.json:/pgadmin4/servers.json"
         profiles:
-        - monitor
+          - monitor
         depends_on:
-        - traefik
+          - traefik
         labels:
-          traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`)
+            traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`)
 
     swagger:
         image: swaggerapi/swagger-ui:v5.11.8
-        profiles:
-        - monitor
         environment:
-          URLS: >
-            [
-              { url: "http://admin.${DOMAIN:-localhost}/openapi.json", name: "admin"},
-              { url: "http://player.${DOMAIN:-localhost}/openapi.json", name: "player"},
-            ]
+            URLS: >
+                [
+                  { url: "http://admin.${DOMAIN:-localhost}/openapi.json", name: "admin"},
+                  { url: "http://player.${DOMAIN:-localhost}/openapi.json", name: "player"},
+                ]
+        profiles:
+          - monitor
         depends_on:
-        - traefik
+          - traefik
         labels:
-          service.type: app
-          traefik.enable: true
-          traefik.http.routers.swagger.rule: Host(`swagger.localhost`)
-          traefik.http.routers.swagger.entrypoints: web
-          traefik.http.services.swagger.loadbalancer.server.port: 8080
+            service.type: app
+            traefik.enable: true
+            traefik.http.routers.swagger.rule: Host(`swagger.localhost`)
+            traefik.http.routers.swagger.entrypoints: web
+            traefik.http.services.swagger.loadbalancer.server.port: 8080
