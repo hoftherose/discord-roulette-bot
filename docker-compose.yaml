@@ -3,14 +3,17 @@ version: "3.9"
 services:
     traefik:
         image: traefik:v3.0
-        command: --api.insecure=true --providers.docker
         ports:
         - "80:80"
         - "8080:8080"
         volumes:
         - "/var/run/docker.sock:/var/run/docker.sock"
+        command:
+        - --api.insecure=true
+        - --providers.docker=true
+        - --entrypoints.web.address=:80
         labels:
-        - rule = "Host(`traefix.localhost`)"
+          traefik.http.routers.traefik.rule: Host(`traefik.localhost`)
 
     api-player:
         build:
@@ -25,7 +28,7 @@ services:
         depends_on:
         - traefik
         labels:
-        - "traefik.http.routers.player.rule=Host(`player.localhost`)"
+          traefik.http.routers.player.rule: Host(`player.localhost`)
 
     api-admin:
         build:
@@ -40,7 +43,7 @@ services:
         depends_on:
         - traefik
         labels:
-        - "traefik.http.routers.admin.rule=Host(`admin.localhost`)"
+          traefik.http.routers.admin.rule: Host(`admin.localhost`)
 
     database:
         image: postgres:16.1
@@ -66,4 +69,23 @@ services:
         depends_on:
         - traefik
         labels:
-        - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)"
+          traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`)
+
+    swagger:
+        image: swaggerapi/swagger-ui:v5.11.8
+        profiles:
+        - monitor
+        environment:
+          URLS: >
+            [
+              { url: "http://admin.${DOMAIN:-localhost}/openapi.json", name: "admin"},
+              { url: "http://player.${DOMAIN:-localhost}/openapi.json", name: "player"},
+            ]
+        depends_on:
+        - traefik
+        labels:
+          service.type: app
+          traefik.enable: true
+          traefik.http.routers.swagger.rule: Host(`swagger.localhost`)
+          traefik.http.routers.swagger.entrypoints: web
+          traefik.http.services.swagger.loadbalancer.server.port: 8080
