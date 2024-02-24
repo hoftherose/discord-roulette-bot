@@ -2,6 +2,7 @@ from typing import Self
 from sqlalchemy import Column, String
 from sqlalchemy import select, insert, update, delete
 
+from src.utils.logger import logger
 from src.repo.conn import Base, Session
 
 
@@ -26,15 +27,19 @@ class Users(Base):
         async with Session() as session:
             session.add(self)
             await session.commit()
+            logger.info(f"User {self.id} created")
 
     async def change_name(self, name: str):
         async with Session() as session:
             session.add(self)
+            old_name = self.name
             self.name = name
             await session.commit()
+            logger.info(f"User {self.id} name changed from {old_name} to {name}")
 
     @classmethod
     async def delete(cls, user: Self):
         async with Session() as session:
             await session.delete(user)
             await session.commit()
+            logger.info(f"User {user.id} deleted from database")
