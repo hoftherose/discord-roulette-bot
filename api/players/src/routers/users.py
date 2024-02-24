@@ -1,4 +1,6 @@
 from fastapi import APIRouter
+
+from src.utils.logger import logger
 from src.services.users import (
     get_all_users,
     get_user_by_id,
