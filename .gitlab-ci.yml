@@ -53,11 +53,13 @@ build_image:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - echo "Building Docker images..."
-    - docker build -f environments/prod/Dockerfile.admin -t discord-roulette-bot-admin:${CI_COMMIT_SHA} .
-    - docker build -f environments/prod/Dockerfile.players -t discord-roulette-bot-players:${CI_COMMIT_SHA} .
+    - docker build -f environments/prod/Dockerfile.admin -t registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot-admin:${CI_COMMIT_SHA} .
+    - docker build -f environments/prod/Dockerfile.players -t registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot-players:${CI_COMMIT_SHA} .
     - echo "Pushing images to Gitlab container registry..."
-    - docker push discord-roulette-bot-admin:${CI_COMMIT_SHA}
-    - docker push discord-roulette-bot-players:${CI_COMMIT_SHA}
+    - docker push registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot-admin:${CI_COMMIT_SHA}
+    - docker push registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot-players:${CI_COMMIT_SHA}
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
 
 sast:
   stage: security
