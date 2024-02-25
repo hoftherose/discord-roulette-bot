@@ -1,0 +1,17 @@
+FROM python:3.11-buster
+
+ENV POETRY_VERSION=1.7.1
+
+WORKDIR /usr
+EXPOSE 8000
+
+RUN pip install "poetry==$POETRY_VERSION"
+
+COPY poetry.lock .
+COPY pyproject.toml .
+RUN poetry install --no-interaction --no-root
+
+COPY api/players /usr/src
+COPY environments/dev/log_conf.yaml /usr/log_conf.yaml
+
+CMD [ "poetry", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--app-dir", "/usr/src", "--log-config=log_conf.yaml"]

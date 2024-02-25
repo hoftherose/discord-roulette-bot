@@ -52,12 +52,21 @@ build_image:
     - echo "Logging into GitLab container registry..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "Building Docker image..."
-    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
-    - echo "Pushing image to Gitlab container registry..."
-    - docker push ${IMAGE_NAME}:${CI_COMMIT_SHA}
+    - export ADMIN_IMAGE=registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/admin
+    - export PLAYER_IMAGE=registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/player
+    - echo "Pulling latest image..."
+    - docker pull ${ADMIN_IMAGE}:latest || true
+    - docker pull ${PLAYER_IMAGE}:latest || true
+    - echo "Building Docker images..."
+    - docker build --cache-from ${ADMIN_IMAGE}:latest -f environments/prod/Dockerfile.admin -t ${ADMIN_IMAGE}:${CI_COMMIT_SHA} -t ${ADMIN_IMAGE}:latest .
+    - docker build --cache-from ${PLAYER_IMAGE}:latest -f environments/prod/Dockerfile.player -t ${PLAYER_IMAGE}:${CI_COMMIT_SHA} -t ${PLAYER_IMAGE}:latest .
+    - echo "Pushing images to Gitlab container registry..."
+    - docker push ${ADMIN_IMAGE}:${CI_COMMIT_SHA}
+    - docker push ${ADMIN_IMAGE}:latest
+    - docker push ${PLAYER_IMAGE}:${CI_COMMIT_SHA}
+    - docker push ${PLAYER_IMAGE}:latest
   rules:
-    - when: never
+    - if: '$CI_COMMIT_REF_NAME == "main" && ($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event")'
 
 sast:
   stage: security
