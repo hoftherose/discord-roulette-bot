@@ -1,5 +1,6 @@
-IMAGE_NAME?=discord_roulette_bot
-IMAGE_TAG?=latest
+IMAGE_BASE:=discord_roulette_bot
+
+IMAGE_TAG:=latest
 
 install: poetry.lock
 	poetry install --no-root
@@ -29,7 +30,18 @@ migrations:
 	poetry run alembic upgrade head
 
 build-image:
-	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
+	docker build -f environments/$(ENV)/Dockerfile.$(SERVICE) -t $(IMAGE_BASE)_$(ENV)_$(SERVICE):$(IMAGE_TAG) .
 
-run-image: build-image
-	docker run -p $(IMAGE_NAME):$(IMAGE_TAG) .
+build-all-images:
+	make build-image SERVICE=admin ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
+	make build-image SERVICE=players ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
+
+run-image:
+	docker run -d -p "8000:8000" --name $(ENV)_$(SERVICE) $(IMAGE_BASE)_$(ENV)_$(SERVICE):$(IMAGE_TAG)
+
+push-image:
+	docker push $(IMAGE_BASE)_$(ENV)_$(SERVICE):$(IMAGE_TAG)
+
+push-all-images: 
+	make push-image SERVICE=admin ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
+	make push-image SERVICE=players ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
