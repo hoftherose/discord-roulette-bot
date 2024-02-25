@@ -34,7 +34,7 @@ build-image:
 
 build-all-images:
 	make build-image SERVICE=admin ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
-	make build-image SERVICE=players ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
+	make build-image SERVICE=player ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
 
 run-image:
 	docker run -d -p "8000:8000" --name $(ENV)_$(SERVICE) $(IMAGE_BASE)_$(ENV)_$(SERVICE):$(IMAGE_TAG)
@@ -44,4 +44,4 @@ push-image:
 
 push-all-images: 
 	make push-image SERVICE=admin ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
-	make push-image SERVICE=players ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
+	make push-image SERVICE=player ENV=$(ENV) IMAGE_BASE=$(IMAGE_BASE) IMAGE_TAG=$(IMAGE_TAG)
