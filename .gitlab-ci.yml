@@ -51,13 +51,13 @@ build_image:
   before_script:
     - echo "Logging into GitLab container registry..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - echo "Installing make..."
-    - apt-get update && apt-get install make
   script:
     - echo "Building Docker images..."
-    - make build-all-images IMAGE_TAG=${CI_COMMIT_SHA} ENV=prod
+    - docker build -f environments/prod/Dockerfile.admin -t discord-roulette-bot-admin:${CI_COMMIT_SHA} .
+    - docker build -f environments/prod/Dockerfile.players -t discord-roulette-bot-players:${CI_COMMIT_SHA} .
     - echo "Pushing images to Gitlab container registry..."
-    - make push-all-images IMAGE_TAG=${CI_COMMIT_SHA} ENV=prod
+    - docker push discord-roulette-bot-admin:${CI_COMMIT_SHA}
+    - docker push discord-roulette-bot-players:${CI_COMMIT_SHA}
 
 sast:
   stage: security
