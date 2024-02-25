@@ -59,7 +59,7 @@ build_image:
     - docker push registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/admin:${CI_COMMIT_SHA}
     - docker push registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/player:${CI_COMMIT_SHA}
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 sast:
   stage: security
