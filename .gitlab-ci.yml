@@ -52,12 +52,10 @@ build_image:
     - echo "Logging into GitLab container registry..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "Building Docker image..."
-    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
-    - echo "Pushing image to Gitlab container registry..."
-    - docker push ${IMAGE_NAME}:${CI_COMMIT_SHA}
-  rules:
-    - when: never
+    - echo "Building Docker images..."
+    - make build-all-images IMAGE_TAG=${CI_COMMIT_SHA} ENV=prod
+    - echo "Pushing images to Gitlab container registry..."
+    - make push-all-images IMAGE_TAG=${CI_COMMIT_SHA} ENV=prod
 
 sast:
   stage: security
