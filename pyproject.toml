@@ -40,6 +40,7 @@ opentelemetry-instrumentation-fastapi = "^0.44b0"
 opentelemetry-instrumentation-asyncpg = "^0.44b0"
 opentelemetry-instrumentation-asyncio = "^0.44b0"
 opentelemetry-instrumentation-urllib3 = "^0.44b0"
+opentelemetry-exporter-otlp-proto-grpc = "^1.23.0"
 
 [build-system]
 requires = ["poetry-core"]
