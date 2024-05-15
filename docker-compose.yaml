@@ -45,6 +45,22 @@ services:
         labels:
           traefik.http.routers.admin.rule: Host(`admin.localhost`)
 
+    api-setup:
+        entrypoint: cd src; poetry -C /usr run alembic upgrade head
+        build:
+          context: .
+          dockerfile: environments/dev/Dockerfile.setup
+        ports:
+        - "8003:8000"
+        env_file:
+        - .env
+        volumes:
+        - ".:/usr/src"
+        depends_on:
+        - database
+        profiles:
+        - setup
+
     database:
         image: postgres:16.1
         restart: always
