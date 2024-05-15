@@ -1,4 +1,4 @@
-FROM python:3.11-buster
+FROM  --platform=$BUILDPLATFORM python:3.11-buster as build
 
 ENV POETRY_VERSION=1.7.1
 
