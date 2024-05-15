@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: discord-bot
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment-player
+  namespace: discord-bot
+spec:
+  selector:
+    matchLabels:
+      app: api-player
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: api-player
+    spec:
+      containers:
+      - name: api-player
+        image: registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/player:latest
+        env:
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: db_pass
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_name
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8000
+      imagePullSecrets:
+      - name: registry-credentials
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment-admin
+  namespace: discord-bot
+spec:
+  selector:
+    matchLabels:
+      app: api-admin
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: api-admin
+    spec:
+      containers:
+      - name: api-admin
+        image: registry.gitlab.com/holytechsoftwareengineeringtraining/web/discord-roulette-bot/admin:latest
+        env:
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: db_pass
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: api-config-map
+              key: db_name
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8000
+      imagePullSecrets:
+      - name: registry-credentials
+
