@@ -1,15 +1,15 @@
 # Discord Roulette Bot
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Discord bot for playing russian roulette and variations of the game. Features will include game settings, possible powerups and team based games.
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
 ## Getting started
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Local Installation
+There are multiple components to the project which each needs their own way of running. The easiest is to use docker and docker-compose `docker compose up -d`. Once all of the containers are up and running you can open `player.localhost/docs` on the browser or any other container path to start using the application.
 
 ## Roadmap
 If you have ideas for releases in the future, it is a good idea to list them in the README.
