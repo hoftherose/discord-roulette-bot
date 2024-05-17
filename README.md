@@ -25,7 +25,8 @@ Once you have the pull secrets you need to create the secrets and fill in the co
 Once you have both of the previous, run `kubectl apply -f k8s/dev/deployment.yml` and watch over the logs to make sure everything was built correctly.
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+We are currently creating the basis for the project, including CICD and architecture setup to allow for seamless development. The features being planned are not complicated in the sense of optimizations, so only basic funcionality will be released first.
+Once the system is out, more work can be done on making the game more interactive and allowing more game modes.
 
 ## Contributing
 State if you are open to contributions and what your requirements are for accepting them.
