@@ -1,4 +1,5 @@
 """Error response outlines"""
+
 from src.routers.responses.base import BaseErrors, BaseResponse
 from .systemcodes import StatusCodes, SystemCodes
 

@@ -1,4 +1,5 @@
 """Base response and error objects"""
+
 import json
 from typing import Optional
 

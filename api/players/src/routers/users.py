@@ -14,10 +14,7 @@ from src.services.users import (
 router = APIRouter(prefix="/users", tags=["User"])
 
 
-@router.get(
-    "/",
-    response_model=UserListResponse().model()
-)
+@router.get("/", response_model=UserListResponse().model())
 async def list_users():
     users = await get_all_users()
     return UserListResponse().format(users)

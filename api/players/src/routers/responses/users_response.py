@@ -1,4 +1,5 @@
 """Response models for client endpoint"""
+
 from datetime import date
 from typing import List
 from pydantic import BaseModel
