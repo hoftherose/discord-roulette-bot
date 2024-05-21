@@ -22,4 +22,4 @@ class UserListResponse(BaseResponse):
     class Schema(BaseModel):
         """Data Schema"""
 
-        RootModel: List[UserSchema]
+        root: List[UserSchema]

@@ -87,11 +87,11 @@ class BaseResponse(BaseModel):
             content = {}
         elif isinstance(content, Base):
             content = orm_as_dict(content)
-        # if isinstance(content, list):
-        #     inner_schema = self.Schema.model_fields["__root__"].type_
-        #     schema_content = self.Schema(
-        #         __root__=[inner_schema(**cont) for cont in content]
-        #     )
+        if isinstance(content, list):
+            inner_schema = self.Schema.model_fields["root"]
+            schema_content = self.Schema(
+                root=[inner_schema(**cont) for cont in content]
+            )
         elif isinstance(content, dict):
             schema_content = self.Schema(**content)
         else:
@@ -104,7 +104,7 @@ class BaseResponse(BaseModel):
                 "status_code": self.get("status_code"),
                 "message": self.get("message"),
                 "code": self.get("code"),
-                "schemas": json.loads(schema_content.json()),
+                "schemas": json.loads(schema_content.model_dump_json()),
             },
         )
 
