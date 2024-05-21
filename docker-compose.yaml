@@ -46,7 +46,7 @@ services:
           traefik.http.routers.admin.rule: Host(`admin.localhost`)
 
     api-setup:
-        entrypoint: cd src; poetry -C /usr run alembic upgrade head
+        entrypoint: bash -c "cd src; poetry -C /usr run alembic upgrade head"
         build:
           context: .
           dockerfile: environments/dev/Dockerfile.setup

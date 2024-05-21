@@ -29,6 +29,9 @@ run: install
 migrations:
 	poetry run alembic upgrade head
 
+migrations-docker:
+	docker compose --profile setup up -d
+
 build-image:
 	docker build -f environments/$(ENV)/Dockerfile.$(SERVICE) -t $(IMAGE_BASE)_$(ENV)_$(SERVICE):$(IMAGE_TAG) .
 
