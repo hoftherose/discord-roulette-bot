@@ -1,5 +1,7 @@
 from fastapi import APIRouter
 
+from src.routers.responses import UserListResponse
+
 from src.utils.logger import logger
 from src.services.users import (
     get_all_users,
@@ -12,10 +14,13 @@ from src.services.users import (
 router = APIRouter(prefix="/users", tags=["User"])
 
 
-@router.get("/")
+@router.get(
+    "/",
+    response_model=UserListResponse().model()
+)
 async def list_users():
     users = await get_all_users()
-    return users
+    return UserListResponse().format(users)
 
 
 @router.get("/{user_id}")
