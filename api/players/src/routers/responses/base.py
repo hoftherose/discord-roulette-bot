@@ -13,12 +13,12 @@ from .utils import orm_as_dict
 
 class BaseSchema(BaseModel):
     class Config:
-        from_attributes=True
+        from_attributes = True
 
 
 class RootSchema(RootModel):
     class Config:
-        from_attributes=True
+        from_attributes = True
 
 
 class BaseResponse(BaseModel):
@@ -103,9 +103,7 @@ class BaseResponse(BaseModel):
             inner_cls = inner_schema.annotation.__args__[0]
             if inner_cls.Config.from_attributes:
                 inner_cls = inner_cls.from_orm
-            schema_content = self.Schema(
-                [inner_cls(cont) for cont in content]
-            )
+            schema_content = self.Schema([inner_cls(cont) for cont in content])
         elif isinstance(content, dict):
             schema_content = self.Schema(**content)
         else:
