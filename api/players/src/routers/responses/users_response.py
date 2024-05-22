@@ -1,15 +1,15 @@
 """Response models for client endpoint"""
 
 from typing import List
-from pydantic import BaseModel
 
 from .systemcodes import SystemCodes
-from src.routers.responses.base import BaseResponse
+from src.routers.responses.base import BaseResponse, BaseSchema, RootSchema
 
 
-class UserSchema(BaseModel):
+class UserSchema(BaseSchema):
     """Schema for returning users"""
 
+    id: int
     name: str
 
 
@@ -19,7 +19,7 @@ class UserResponse(BaseResponse):
     message: str = "Returned due date in specified range"
     code: int = SystemCodes.SUCCESSFUL_QUERY
 
-    class Schema(BaseModel):
+    class Schema(RootSchema):
         """Data Schema"""
 
         root: UserSchema
@@ -31,7 +31,7 @@ class UserListResponse(BaseResponse):
     message: str = "Returned due date in specified range"
     code: int = SystemCodes.SUCCESSFUL_QUERY
 
-    class Schema(BaseModel):
+    class Schema(RootSchema):
         """Data Schema"""
 
         root: List[UserSchema]

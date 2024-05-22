@@ -3,12 +3,22 @@
 import json
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from fastapi.responses import JSONResponse
 
 from src.repo.conn import Base
 from .systemcodes import StatusCodes, SystemCodes
 from .utils import orm_as_dict
+
+
+class BaseSchema(BaseModel):
+    class Config:
+        from_attributes=True
+
+
+class RootSchema(RootModel):
+    class Config:
+        from_attributes=True
 
 
 class BaseResponse(BaseModel):
@@ -34,7 +44,7 @@ class BaseResponse(BaseModel):
     message: str = "Message goes here"
     code: int = SystemCodes.UNDEFINED
 
-    class Schema(BaseModel):
+    class Schema(BaseSchema):
         """Response content schema, must be defined in each response object.
         Object name must stay the same (Schema). Consult the pydantic
         documentation for more info.
@@ -90,8 +100,11 @@ class BaseResponse(BaseModel):
             content = orm_as_dict(content)
         if isinstance(content, list):
             inner_schema = self.Schema.model_fields["root"]
+            inner_cls = inner_schema.annotation.__args__[0]
+            if inner_cls.Config.from_attributes:
+                inner_cls = inner_cls.from_orm
             schema_content = self.Schema(
-                root=[inner_schema(**cont) for cont in content]
+                [inner_cls(cont) for cont in content]
             )
         elif isinstance(content, dict):
             schema_content = self.Schema(**content)

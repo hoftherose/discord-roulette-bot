@@ -23,7 +23,7 @@ async def list_users():
 @router.get("/{user_id}", response_model=UserResponse().model())
 async def get_user(user_id: str):
     user = await get_user_by_id(user_id)
-    return UserListResponse().format(user)
+    return UserResponse().format(user)
 
 
 @router.post("/{user_id}")
