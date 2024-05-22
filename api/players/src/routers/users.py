@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.routers.responses import UserListResponse
+from src.routers.responses import *
 
 from src.utils.logger import logger
 from src.services.users import (
@@ -11,7 +11,7 @@ from src.services.users import (
     remove_user,
 )
 
-router = APIRouter(prefix="/users", tags=["User"])
+router = APIRouter(prefix="/users", responses=ErrorResponses.all(), tags=["User"])
 
 
 @router.get("/", response_model=UserListResponse().model())
@@ -20,16 +20,16 @@ async def list_users():
     return UserListResponse().format(users)
 
 
-@router.get("/{user_id}")
+@router.get("/{user_id}", response_model=UserResponse().model())
 async def get_user(user_id: str):
     user = await get_user_by_id(user_id)
-    return user
+    return UserListResponse().format(user)
 
 
 @router.post("/{user_id}")
 async def post_user(user_id: str, name: str):
     await create_user(user_id, name)
-    return {"msg": f"User {user_id} successfully created"}
+    return {"msg": f"User {user_id} '{name}' successfully created"}
 
 
 @router.patch("/{user_id}/name")

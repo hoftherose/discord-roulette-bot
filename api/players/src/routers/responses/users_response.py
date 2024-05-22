@@ -1,6 +1,5 @@
 """Response models for client endpoint"""
 
-from datetime import date
 from typing import List
 from pydantic import BaseModel
 
@@ -12,6 +11,18 @@ class UserSchema(BaseModel):
     """Schema for returning users"""
 
     name: str
+
+
+class UserResponse(BaseResponse):
+    """Response to return next payment dates in specified range."""
+
+    message: str = "Returned due date in specified range"
+    code: int = SystemCodes.SUCCESSFUL_QUERY
+
+    class Schema(BaseModel):
+        """Data Schema"""
+
+        root: UserSchema
 
 
 class UserListResponse(BaseResponse):
