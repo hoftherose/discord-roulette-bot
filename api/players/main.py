@@ -13,7 +13,9 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from src.routers import health_checker_router, user_router
 from src.repo.conn import Base
 
-provider = TracerProvider(resource=Resource.create({SERVICE_NAME: "Fastapi-users"}))
+provider = TracerProvider(
+    resource=Resource.create({SERVICE_NAME: os.environ.get("OTEL_SERVICE_NAME")})
+)
 processor = BatchSpanProcessor(
     JaegerExporter(
         agent_host_name=os.environ.get("JAEGER_HOST", "jaeger"),
