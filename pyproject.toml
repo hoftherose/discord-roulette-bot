@@ -8,6 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+setuptools = "^70.0.0"
 
 [tool.poetry.group.dev.dependencies]
 fastapi = "^0.109.2"
@@ -40,7 +41,7 @@ opentelemetry-instrumentation-fastapi = "^0.44b0"
 opentelemetry-instrumentation-asyncpg = "^0.44b0"
 opentelemetry-instrumentation-asyncio = "^0.44b0"
 opentelemetry-instrumentation-urllib3 = "^0.44b0"
-opentelemetry-exporter-otlp-proto-grpc = "^1.23.0"
+opentelemetry-exporter-jaeger = "^1.21.0"
 
 [build-system]
 requires = ["poetry-core"]
