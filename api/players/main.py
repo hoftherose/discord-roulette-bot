@@ -19,7 +19,7 @@ provider = TracerProvider(
 processor = BatchSpanProcessor(
     JaegerExporter(
         agent_host_name=os.environ.get("JAEGER_HOST", "jaeger"),
-        agent_port=os.environ.get("JAEGER_PORT", 6831),
+        agent_port=int(os.environ.get("JAEGER_PORT", 6831)),
     )
 )
 provider.add_span_processor(processor)
