@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,8 +16,8 @@ from src.repo.conn import Base
 provider = TracerProvider(resource=Resource.create({SERVICE_NAME: "Fastapi-users"}))
 processor = BatchSpanProcessor(
     JaegerExporter(
-        agent_host_name="jaeger",
-        agent_port=6831
+        agent_host_name=os.environ.get("JAEGER_HOST", "jaeger"),
+        agent_port=os.environ.get("JAEGER_PORT", 6831),
     )
 )
 provider.add_span_processor(processor)
